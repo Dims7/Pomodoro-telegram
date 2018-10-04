@@ -4,11 +4,11 @@ import java.util.Date;
 
 public class Timer
 {
-    private final int millsInMin = 60000;
     private long startTime;
 
     public Timer(int mins)
     {
+        int millsInMin = 60000;
         timer = mins * millsInMin;
         startTime = System.currentTimeMillis();
     }
