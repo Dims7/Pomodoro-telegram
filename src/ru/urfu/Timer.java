@@ -1,7 +1,5 @@
 package ru.urfu;
 
-import java.util.Date;
-
 public class Timer
 {
     private long startTime;
