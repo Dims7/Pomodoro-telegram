@@ -6,31 +6,39 @@ public class Pomodoro
     private Status currentStatus;
     private int countOfTasks = 0;
 
-    public void startWork()
+    public void start()
+    {
+        startWork();
+    }
+
+    private void startWork()
     {
         countOfTasks++;
         timer = new Timer(Config.WORK_TIME_IN_MINUTES);
         currentStatus = Status.WORK;
     }
 
-    public void startShortRest()
+    private void startShortRest()
     {
         timer = new Timer(Config.SHORT_REST_TIME_IN_MINUTES);
         currentStatus = Status.SHORT_REST;
     }
 
-    public void startLongRest()
+    private void startLongRest()
     {
         timer = new Timer(Config.LONG_REST_TIME_IN_MINUTES);
         currentStatus = Status.LONG_REST;
     }
 
-    public boolean check()
+    public void stop()
     {
-        if (timer.checkTime())
-        {
-            switch (currentStatus)
-            {
+        timer = null;
+    }
+
+    public Status check()
+    {
+        if (timer != null && timer.checkTime()) {
+            switch (currentStatus) {
                 case LONG_REST:
                     startWork();
                     break;
@@ -44,10 +52,9 @@ public class Pomodoro
                         startShortRest();
                     break;
             }
-            return true;
+            return currentStatus;
         }
-        else
-            return false;
+        return null;
     }
 
 
