@@ -35,7 +35,7 @@ public class Pomodoro
         timer = null;
     }
 
-    public Status check()
+    public Status popStatus()
     {
         if (timer != null && timer.checkTime()) {
             switch (currentStatus) {
