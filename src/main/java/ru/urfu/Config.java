@@ -10,7 +10,7 @@ public class Config {
 
     static final int MILLS_IN_TICK = 1000; //1000
 
-    static final String TOKEN = "4e27f37ef4f239735454aae88e1488ff864288bb9ec0106fe90edbe1df13d3fcd54e238027ec3a882afc1";
+    static final String TOKEN_FILE_NAME = "TOKEN";
     static final int GROUP_ID = 172715424;
     static final int USER_FOR_DEBAG_ID = 142866061;
 }
