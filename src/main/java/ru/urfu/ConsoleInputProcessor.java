@@ -3,7 +3,7 @@ package ru.urfu;
 import java.util.ArrayDeque;
 import java.util.Scanner;
 
-class InputProcessor
+class ConsoleInputProcessor
         implements Runnable {
     private ArrayDeque<String> requestsQueue = new ArrayDeque<>();
 
