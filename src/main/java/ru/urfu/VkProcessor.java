@@ -6,27 +6,27 @@ import com.petersamokhin.bots.sdk.objects.Message;
 import java.util.ArrayDeque;
 
 public class VkProcessor {
-    private ArrayDeque<String> requestsQueue = new ArrayDeque<>();
+    private ArrayDeque<Request> requestsQueue = new ArrayDeque<>();
     private Group group = new Group(Config.GROUP_ID, Config.TOKEN);
 
-    public String poolRequest() {
+    public Request poolRequest() {
         return requestsQueue.poll();
     }
 
-    public String peekRequest() {
+    public Request peekRequest() {
         return requestsQueue.peek();
     }
 
     public void run() {
         group.onSimpleTextMessage(message ->
-                requestsQueue.add(message.getText())
+                requestsQueue.add(new Request(message.authorId(), message.getText()))
         );
     }
 
-    public void sendMessage(String message) {
+    public void sendMessage(int id, String message) {
         new Message()
                 .from(group)
-                .to(Config.USER_FOR_DEBAG_ID)
+                .to(id)
                 .text(message)
                 .send();
     }

@@ -1,42 +1,37 @@
 package ru.urfu;
 
-public class Pomodoro
-{
+import lombok.Getter;
+
+public class Pomodoro {
     private Timer timer;
     private Status currentStatus;
     private int countOfTasks = 0;
 
-    public void start()
-    {
+    public void start() {
         startWork();
     }
 
-    private void startWork()
-    {
+    private void startWork() {
         countOfTasks++;
         timer = new Timer(Config.WORK_TIME_IN_MINUTES);
         currentStatus = Status.WORK;
     }
 
-    private void startShortRest()
-    {
+    private void startShortRest() {
         timer = new Timer(Config.SHORT_REST_TIME_IN_MINUTES);
         currentStatus = Status.SHORT_REST;
     }
 
-    private void startLongRest()
-    {
+    private void startLongRest() {
         timer = new Timer(Config.LONG_REST_TIME_IN_MINUTES);
         currentStatus = Status.LONG_REST;
     }
 
-    public void stop()
-    {
+    public void stop() {
         timer = null;
     }
 
-    public Status popStatus()
-    {
+    public Status popStatus() {
         if (timer != null && timer.checkTime()) {
             switch (currentStatus) {
                 case LONG_REST:
@@ -58,8 +53,7 @@ public class Pomodoro
     }
 
 
-    enum Status
-    {
+    enum Status {
         WORK,
         SHORT_REST,
         LONG_REST

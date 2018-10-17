@@ -1,25 +1,33 @@
 package ru.urfu;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
+
 public class ProcessMain {
     private Pomodoro pomodoro;
     private VkProcessor vkProcessor;
+    private HashMap<Integer, Pomodoro> pomodoros = new HashMap<>();
 
     public ProcessMain() {
-        pomodoro = new Pomodoro();
+//        pomodoro = new Pomodoro();
         vkProcessor = new VkProcessor();
         vkProcessor.run();
     }
 
     private void processRequests() {
         while (vkProcessor.peekRequest() != null) {
-            switch (vkProcessor.poolRequest()) {
+            int id = vkProcessor.peekRequest().getUserID();
+            String message = vkProcessor.poolRequest().getMessage();
+            switch (message) {
                 case Config.COMMAND_START:
-                    vkProcessor.sendMessage(Strings.MESSAGE_WHEN_POMODORO_STARTED);
-                    pomodoro.start();
+                    pomodoros.put(id, new Pomodoro());
+                    vkProcessor.sendMessage(id, Strings.MESSAGE_WHEN_POMODORO_STARTED);
+                    pomodoros.get(id).start();
                     break;
                 case Config.COMMAND_STOP:
-                    vkProcessor.sendMessage(Strings.MESSAGE_WHEN_POMODORO_STOPPED);
-                    pomodoro.stop();
+                    vkProcessor.sendMessage(id, Strings.MESSAGE_WHEN_POMODORO_STOPPED);
+                    pomodoros.remove(id);
                     break;
             }
         }
@@ -33,26 +41,30 @@ public class ProcessMain {
         }
     }
 
-    private void processPomodoro() {
-        Pomodoro.Status tmp = pomodoro.popStatus();
-        if (tmp != null)
-            switch (tmp) {
-                case WORK:
-                    vkProcessor.sendMessage(Strings.MESSAGE_WHEN_WORK_STARTED);
-                    break;
-                case LONG_REST:
-                    vkProcessor.sendMessage(Strings.MESSAGE_WHEN_LONG_REST_STARTED);
-                    break;
-                case SHORT_REST:
-                    vkProcessor.sendMessage(Strings.MESSAGE_WHEN_SHORT_REST_STARTED);
-                    break;
-            }
+    private void processPomodoros() {
+        pomodoros.forEach((id, pomodoro) -> {
+            Pomodoro.Status tmp = pomodoro.popStatus();
+            if (tmp != null)
+                switch (tmp) {
+                    case WORK:
+                        vkProcessor.sendMessage(id, Strings.MESSAGE_WHEN_WORK_STARTED);
+                        break;
+                    case LONG_REST:
+                        vkProcessor.sendMessage(id, Strings.MESSAGE_WHEN_LONG_REST_STARTED);
+                        break;
+                    case SHORT_REST:
+                        vkProcessor.sendMessage(id, Strings.MESSAGE_WHEN_SHORT_REST_STARTED);
+                        break;
+                }
+        });
+
+
     }
 
     public void run() {
         while (true) {
             processRequests();
-            processPomodoro();
+            processPomodoros();
             sleep();
         }
     }
