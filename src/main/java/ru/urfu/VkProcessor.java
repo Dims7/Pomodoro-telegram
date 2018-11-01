@@ -35,12 +35,9 @@ public class VkProcessor {
     }
 
     private String readToken() {
-        try {
-            try (java.io.FileReader fileReader = new java.io.FileReader(Config.TOKEN_FILE_NAME)) {
-                try(BufferedReader bufferedReader = new BufferedReader(fileReader)) {
-                    return bufferedReader.readLine();
-                }
-            }
+        try (java.io.FileReader fileReader = new java.io.FileReader(Config.TOKEN_FILE_NAME);
+             BufferedReader bufferedReader = new BufferedReader(fileReader)) {
+            return bufferedReader.readLine();
         } catch (IOException e) {
             e.printStackTrace();
         }

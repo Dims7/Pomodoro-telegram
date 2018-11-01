@@ -20,9 +20,13 @@ public class ProcessMain {
             String message = vkProcessor.poolRequest().getMessage();
             switch (message.toLowerCase()) {
                 case Config.COMMAND_START:
-                    pomodoros.put(id, new Pomodoro());
-                    vkProcessor.sendMessage(id, Strings.MESSAGE_WHEN_POMODORO_STARTED);
-                    pomodoros.get(id).start();
+                    if (!pomodoros.containsKey(id)) {
+                        pomodoros.put(id, new Pomodoro());
+                        vkProcessor.sendMessage(id, Strings.MESSAGE_WHEN_POMODORO_STARTED);
+                        pomodoros.get(id).start();
+                    }
+                    else
+                        vkProcessor.sendMessage(id, Strings.MESSAGE_WHEN_POMODORO_RESTARTED);
                     break;
                 case Config.COMMAND_STOP:
                     if (pomodoros.containsKey(id)) {
