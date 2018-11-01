@@ -10,7 +10,7 @@ import java.util.ArrayDeque;
 
 public class VkProcessor {
     private ArrayDeque<Request> requestsQueue = new ArrayDeque<>();
-    private Group group = new Group(Config.GROUP_ID, readToken(Config.TOKEN_FILE_NAME));
+    private Group group = new Group(Config.GROUP_ID, readToken());
 
     public Request poolRequest() {
         return requestsQueue.poll();
@@ -34,31 +34,17 @@ public class VkProcessor {
                 .send();
     }
 
-    private String readToken(String tokenFileName) {
-        java.io.FileReader fileReader = null;
+    private String readToken() {
         try {
-            fileReader = new java.io.FileReader(tokenFileName);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        BufferedReader bufferedReader = new BufferedReader(fileReader);
-
-        String result = "";
-        try {
-            result = bufferedReader.readLine();
+            try (java.io.FileReader fileReader = new java.io.FileReader(Config.TOKEN_FILE_NAME)) {
+                try(BufferedReader bufferedReader = new BufferedReader(fileReader)) {
+                    return bufferedReader.readLine();
+                }
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        try {
-            bufferedReader.close();
-            fileReader.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return result;
+        return null;
     }
 
 }

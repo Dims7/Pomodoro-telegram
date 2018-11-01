@@ -7,4 +7,6 @@ public class Strings
     static final String MESSAGE_WHEN_SHORT_REST_STARTED = "Пора отдыхать (короткий перерыв)";
     static final String MESSAGE_WHEN_POMODORO_STARTED = "Помодоро запущен, приступайте к работе";
     static final String MESSAGE_WHEN_POMODORO_STOPPED = "Помодоро остановлен";
+    static final String MESSAGE_WHEN_POMODORO_NOT_FOUND = "Нет запущенных помодоров";
+
 }

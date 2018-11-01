@@ -1,7 +1,5 @@
 package ru.urfu;
 
-import lombok.Getter;
-
 public class Pomodoro {
     private Timer timer;
     private Status currentStatus;

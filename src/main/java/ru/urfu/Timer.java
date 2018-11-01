@@ -6,7 +6,7 @@ public class Timer
 
     public Timer(int mins)
     {
-        int millsInMin = 60000;
+        final int millsInMin = 60000;
         timer = mins * millsInMin;
         startTime = System.currentTimeMillis();
     }

@@ -10,7 +10,6 @@ public class ProcessMain {
     private HashMap<Integer, Pomodoro> pomodoros = new HashMap<>();
 
     public ProcessMain() {
-//        pomodoro = new Pomodoro();
         vkProcessor = new VkProcessor();
         vkProcessor.run();
     }
@@ -19,15 +18,19 @@ public class ProcessMain {
         while (vkProcessor.peekRequest() != null) {
             int id = vkProcessor.peekRequest().getUserID();
             String message = vkProcessor.poolRequest().getMessage();
-            switch (message) {
+            switch (message.toLowerCase()) {
                 case Config.COMMAND_START:
                     pomodoros.put(id, new Pomodoro());
                     vkProcessor.sendMessage(id, Strings.MESSAGE_WHEN_POMODORO_STARTED);
                     pomodoros.get(id).start();
                     break;
                 case Config.COMMAND_STOP:
-                    vkProcessor.sendMessage(id, Strings.MESSAGE_WHEN_POMODORO_STOPPED);
-                    pomodoros.remove(id);
+                    if (pomodoros.containsKey(id)) {
+                        vkProcessor.sendMessage(id, Strings.MESSAGE_WHEN_POMODORO_STOPPED);
+                        pomodoros.remove(id);
+                    } else {
+                        vkProcessor.sendMessage(id, Strings.MESSAGE_WHEN_POMODORO_NOT_FOUND);
+                    }
                     break;
             }
         }
@@ -43,9 +46,9 @@ public class ProcessMain {
 
     private void processPomodoros() {
         pomodoros.forEach((id, pomodoro) -> {
-            Pomodoro.Status tmp = pomodoro.popStatus();
-            if (tmp != null)
-                switch (tmp) {
+            Pomodoro.Status pomodoroStatus = pomodoro.popStatus();
+            if (pomodoroStatus != null)
+                switch (pomodoroStatus) {
                     case WORK:
                         vkProcessor.sendMessage(id, Strings.MESSAGE_WHEN_WORK_STARTED);
                         break;
