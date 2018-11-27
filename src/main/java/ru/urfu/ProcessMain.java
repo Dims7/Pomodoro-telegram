@@ -24,8 +24,7 @@ public class ProcessMain {
                         pomodoros.put(id, new Pomodoro());
                         vkProcessor.sendMessage(id, Strings.MESSAGE_WHEN_POMODORO_STARTED);
                         pomodoros.get(id).start();
-                    }
-                    else
+                    } else
                         vkProcessor.sendMessage(id, Strings.MESSAGE_WHEN_POMODORO_RESTARTED);
                     break;
                 case Config.COMMAND_STOP:
@@ -36,6 +35,11 @@ public class ProcessMain {
                         vkProcessor.sendMessage(id, Strings.MESSAGE_WHEN_POMODORO_NOT_FOUND);
                     }
                     break;
+                case Config.COMMAND_HELP:
+                    vkProcessor.sendMessage(id, Strings.MESSAGE_HELP);
+                    break;
+                default:
+                    vkProcessor.sendMessage(id, Strings.MESSAGE_WRONG_COMMAND);
             }
         }
     }
