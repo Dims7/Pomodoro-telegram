@@ -8,6 +8,7 @@ public class ProcessMain {
     private Pomodoro pomodoro;
     private VkProcessor vkProcessor;
     private HashMap<Integer, Pomodoro> pomodoros = new HashMap<>();
+    private Statistics statistics = new Statistics();
 
     public ProcessMain() {
         vkProcessor = new VkProcessor();
@@ -24,7 +25,8 @@ public class ProcessMain {
                         pomodoros.put(id, new Pomodoro());
                         vkProcessor.sendMessage(id, Strings.MESSAGE_WHEN_POMODORO_STARTED);
                         pomodoros.get(id).start();
-                    } else
+                    }
+                    else
                         vkProcessor.sendMessage(id, Strings.MESSAGE_WHEN_POMODORO_RESTARTED);
                     break;
                 case Config.COMMAND_STOP:
@@ -37,6 +39,9 @@ public class ProcessMain {
                     break;
                 case Config.COMMAND_HELP:
                     vkProcessor.sendMessage(id, Strings.MESSAGE_HELP);
+                    break;
+                case Config.COMMAND_STATISTIC:
+                    vkProcessor.sendMessage(id, Strings.MESSAGE_STATISTIC + statistics.getUserStatistic(id).toString());
                     break;
                 default:
                     vkProcessor.sendMessage(id, Strings.MESSAGE_WRONG_COMMAND);
@@ -61,9 +66,11 @@ public class ProcessMain {
                         vkProcessor.sendMessage(id, Strings.MESSAGE_WHEN_WORK_STARTED);
                         break;
                     case LONG_REST:
+                        statistics.addPointToUser(id);
                         vkProcessor.sendMessage(id, Strings.MESSAGE_WHEN_LONG_REST_STARTED);
                         break;
                     case SHORT_REST:
+                        statistics.addPointToUser(id);
                         vkProcessor.sendMessage(id, Strings.MESSAGE_WHEN_SHORT_REST_STARTED);
                         break;
                 }

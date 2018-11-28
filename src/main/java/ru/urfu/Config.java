@@ -8,11 +8,14 @@ public class Config {
     static final String COMMAND_START = "start";
     static final String COMMAND_STOP = "stop";
     static final String COMMAND_HELP = "help";
+    static final String COMMAND_STATISTIC = "statistic";
 
 
     static final int MILLS_IN_TICK = 1000; //1000
 
     static final String TOKEN_FILE_NAME = "TOKEN";
+    static final String STATISTIC_FILE_NAME = "statistic.json";
+
     static final int GROUP_ID = 172715424;
     static final int USER_FOR_DEBAG_ID = 142866061;
 }
