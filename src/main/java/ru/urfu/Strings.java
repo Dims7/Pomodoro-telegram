@@ -10,7 +10,7 @@ public class Strings
     static final String MESSAGE_WHEN_POMODORO_STOPPED = "Помодоро остановлен";
     static final String MESSAGE_WHEN_POMODORO_NOT_FOUND = "Нет запущенных помодоров";
     static final String MESSAGE_HELP = new StringBuilder()
-            .append("Метод «Помидора» — техника управления временем, предложенная Франческо Чирилло в конце 1980-х. \n")
+            .append("Метод «Помидора» - техника управления временем, предложенная Франческо Чирилло в конце 1980-х. \n")
             .append("Техника предполагает разбиение задач на 25-минутные периоды, называемые «помидоры\n», " +
                     "сопровождаемые короткими перерывами.\n")
             .append("Базовые принципы:\n")
